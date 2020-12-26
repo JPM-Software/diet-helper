@@ -6,8 +6,9 @@ from rest_framework.response import Response
 def apiOverview(request):
     api_urls = {
         'Users GET/POST': '/users/',
-        'User GET/PUT/DELETE': '/user/<str:pk>/',
+        'User GET/PUT/DELETE': '/users/<str:pk>/',
+        'User Details GET/PUT': '/users/<str:pk>/details',
         'Foods GET/POST': '/foods/',
-        'Food GET/PUT/DELETE': '/food/<str:pk>/',
+        'Food GET/PUT/DELETE': '/foods/<str:pk>/',
     }
     return Response(api_urls)

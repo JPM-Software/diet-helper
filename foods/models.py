@@ -5,7 +5,7 @@ from django.db import models
 
 class Food(models.Model):
     name = models.CharField(max_length=254)
-    calories = models.IntegerField(max_length=254)
+    calories = models.IntegerField()
 
     def _str_(self):
         return self.name
