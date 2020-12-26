@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'api.apps.ApiConfig',
     'users.apps.UsersConfig',
+    'foods.apps.FoodsConfig',
     'rest_framework'
 ]
 
