@@ -1,11 +1,9 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserDetailsSerializer
 
-from .models import User
+from .models import User, UserDetails
+
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -45,3 +43,20 @@ def user(request, pk):
         user.delete()
 
         return Response('Item succsesfully delete!')
+
+
+@api_view(['GET', 'PUT'])
+def userDetails(request, pk):
+    if request.method == 'GET':
+        userDetails = UserDetails.objects.get(user=pk)
+        serializer = UserDetailsSerializer(userDetails, many=False)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        userDetails = UserDetails.objects.get(user=pk)
+        serializer = UserDetailsSerializer(instance=userDetails, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+        return Response(serializer.data)
