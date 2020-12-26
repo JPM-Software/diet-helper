@@ -5,7 +5,4 @@ urlpatterns = [
     path('', views.apiOverview, name="api-overview"),
     path('users/', views.users, name="users"),
     path('user/<str:pk>/', views.user, name="user"),
-    path('user-create/', views.userCreate, name="user-create"),
-    path('user-update/<str:pk>/', views.userUpdate, name="user-update"),
-    path('user-delete/<str:pk>/', views.userDelete, name="user-delete"),
 ]

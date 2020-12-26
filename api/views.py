@@ -11,51 +11,46 @@ from .models import User
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
-        'List': '/users/',
-        'User details': '/user/<str:pk>/',
-        'Create user': '/user-create/',
-        'Update user': '/user-update/<str:pk>/',
-        'Delete user': '/user-delete/<str:pk>/',
+        'Users GET/POST': '/users/',
+        'User GET/PUT/DELETE': '/user/<str:pk>/',
     }
     return Response(api_urls)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def users(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+        return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def user(request, pk):
-    user = User.objects.get(id=pk)
-    serializer = UserSerializer(user, many=False)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        user = User.objects.get(id=pk)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)
 
+    elif request.method == 'PUT':
+        user = User.objects.get(id=pk)
+        serializer = UserSerializer(instance=user, data=request.data)
 
-@api_view(['POST'])
-def userCreate(request):
-    serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
 
-    if serializer.is_valid():
-        serializer.save()
+        return Response(serializer.data)
 
-    return Response(serializer.data)
+    elif request.method == 'DELETE':
+        user = User.objects.get(id=pk)
+        user.delete()
 
-@api_view(['PUT'])
-def userUpdate(request, pk):
-    user = User.objects.get(id=pk)
-    serializer = UserSerializer(instance=user, data=request.data)
-
-    if serializer.is_valid():
-        serializer.save()
-
-    return Response(serializer.data)
-
-@api_view(['DELETE'])
-def userDelete(request, pk):
-    user = User.objects.get(id=pk)
-    user.delete()
-
-    return Response('Item succsesfully delete!')
+        return Response('Item succsesfully delete!')
