@@ -15,7 +15,7 @@ class DailyDiary(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
-    foods = models.ManyToManyField(Food)
+    foods = models.ManyToManyField(Food, null=True, blank=True)
 
     def _str_(self):
         return self.user

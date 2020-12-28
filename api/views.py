@@ -13,5 +13,7 @@ def apiOverview(request):
         'Foods GET/POST': '/diaries/foods/all',
         'Foods for diary GET': '/diaries/<str:pk>/foods/',
         'Food GET/DELETE': '/diaries/foods/<str:pk>',
+        'Diaries by user': '/diaries/by-user/<str:pk>/',
+        'Diary (today) by user': '/diaries/by-user/<str:pk>/today/',
     }
     return Response(api_urls)
