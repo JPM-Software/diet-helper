@@ -1,6 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import FoodSerializer, DailyDiarySerializer
+from django.http import Http404
+from datetime import date
 
 from .models import Food, DailyDiary, User
 
@@ -54,7 +56,9 @@ def diaries(request):
 
     elif request.method == 'POST':
         serializer = DailyDiarySerializer(data=request.data)
-
+        print(request.data)
+        print('============')
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
 
@@ -69,33 +73,26 @@ def diaries_by_user(request, pk):
         return Response(serializer.data)
 
 
-# @api_view(['GET'])
-# def diaries_by_user_today(request, pk):
-#     if request.method == 'GET':
-#         daily_diary = None
-#         today_diary = DailyDiary()
-#         daily_diaries = DailyDiary.objects.filter(user=pk, date=today_diary.date)
-#
-#         if daily_diaries is None:
-#             try:
-#                 user_object = User.objects.get(id=pk)
-#             except User.DoesNotExist:
-#                 user_object = None
-#             if user_object:
-#                 today_diary.user = user_object
-#
-#                 serializer = DailyDiarySerializer(today_diary)
-#
-#                 if serializer.is_valid():
-#                     serializer.save()
-#
-#                 return Response(serializer.data)
-#             else:
-#                 # user does not exist
-#                 pass
-#
-#         serializer = DailyDiarySerializer(daily_diaries, many=False)
-#         return Response(serializer.data)
+@api_view(['GET'])
+def diaries_by_user_today(request, pk):
+    if request.method == 'GET':
+        today = date.today()
+        daily_diary = DailyDiary.objects.filter(user=pk).filter(date=today).first()
+        if daily_diary is None:
+            user_from_db = User.objects.get(id=pk)
+            if user_from_db is not None:
+                serializer = DailyDiarySerializer(data={'user': user_from_db.id})
+                print(serializer)
+
+                if serializer.is_valid():
+                    print("Serializer is valid")
+                    serializer.save()
+                print("Serializer is not valid")
+                return Response(serializer.data)
+            raise Http404
+
+        serializer = DailyDiarySerializer(daily_diary)
+        return Response(serializer.data)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
