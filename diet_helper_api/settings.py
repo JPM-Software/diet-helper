@@ -42,10 +42,16 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'foods.apps.FoodsConfig',
     'rest_framework',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
+    # CORS
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -126,3 +132,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+
+CORS_ORIGIN_ALLOW_ALL = True
