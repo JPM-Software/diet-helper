@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'users.apps.UsersConfig',
     'foods.apps.FoodsConfig',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework_swagger'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
