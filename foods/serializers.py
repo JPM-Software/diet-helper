@@ -12,3 +12,9 @@ class DailyDiarySerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyDiary
         fields = '__all__'
+        depth = 1
+
+class DailyDiarySaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyDiary
+        fields = '__all__'
