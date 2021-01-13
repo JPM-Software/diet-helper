@@ -19,10 +19,12 @@ class User(models.Model):
 
 
 class UserDetails(models.Model):
+    age = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
     sex = models.BooleanField(default=True)
     calories = models.IntegerField(default=0)
+    dietTarget = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='userdetails')
 
     def _str_(self):
