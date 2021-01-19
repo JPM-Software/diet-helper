@@ -18,7 +18,7 @@ Do opisu i stworzenia spójnej dokumentacji dla zbudowanego API wykorzystano nar
 W projekecie wykorzystano bazę danych **PostgreSQL**, który jest jest jednym z najbardziej popularnych systemów zarządania obiektowo-relacyjną bazą danych i jednym z niewielu systemów zarządania bazą danych oferujących obiektowo-relacyjne podejście do baz danych.   
     
 ## Dokumentacja wszystkich endpointów dostarczanych przez  API 📋    
- I use swagger-ui in the project, so you get the current Mentoring API documentation every time.  You can read it yourself,  just run the application and go to: *server-ip:port/swagger-ui.html* 😉    
+ Dokumentacja API z wykorzystaniem narzędzia Swagger dostępna jest pod adresem: *server-ip:port/* 😉 
  ![](./resources/img/swagger-ui-diet-helper-api.png)    
     
     
